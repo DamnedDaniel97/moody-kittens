@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../balloon-pop"
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "moody-kittens",
+    "liveServer.settings.port": 5501
+  }
+}
