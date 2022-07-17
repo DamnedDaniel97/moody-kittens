@@ -4,7 +4,8 @@ let mood = "";
 let affection = 5;
 
 loadKittens();
-saveKittens();
+drawKittens();
+
 /**
  * Called when submitting the new Kitten Form
  * This method will pull data from the form
@@ -18,7 +19,6 @@ function addKitten(event) {
   let form = event.target;
   let kittenName = form.name.value;
 
-  findKittenById();
   currentKitten = kittens.find((kitten) => kitten.name == kittenName);
   if (!currentKitten) {
     currentKitten = {
@@ -29,10 +29,16 @@ function addKitten(event) {
     };
     kittens.push(currentKitten);
     saveKittens();
+  } else {
+    alert("you already have a cat with this name");
   }
   drawKittens();
+  setKittenMood(currentKitten);
+  // NOTE setKittenMood() must have the id to draw correctly
+  // this is letting me delete a cat without having to reload the page for a new cats image to appear
+
   form.reset();
-  console.log(currentKitten);
+  // console.log(currentKitten);
 }
 
 /**
@@ -80,7 +86,7 @@ function drawKittens() {
         <span>${kitten.name}</span>
       </p>
       <p>Mood:
-        <span>${kitten.mood}</span>
+        <span id="mood">${kitten.mood}</span>
       </p>
       <p>Affection:
         <span>${kitten.affection}</span>
@@ -103,7 +109,7 @@ function drawKittens() {
  * @return {Kitten}
  */
 function findKittenById(id) {
-  return kittens.find((kitten) => kitten.id == id);
+  return kittens.find((kitten) => (kitten.id = id));
 }
 
 /**
@@ -119,11 +125,14 @@ function pet(id) {
   let randomNum = Math.random();
   // console.log(randomNum);
   if (currentKitten.affection >= 10) {
+    if (randomNum < 0.5) {
+      currentKitten.affection--;
+    }
     return;
   }
 
   if (randomNum > 0.5) {
-    currentKitten.affection++;
+    currentKitten.affection--;
     saveKittens();
   } else {
     currentKitten.affection--;
@@ -142,7 +151,7 @@ function catnip(id) {
   let currentKitten = findKittenById(id);
   currentKitten.mood = "Tolerant";
   currentKitten.affection = 5;
-  setKittenMood(currentKitten);
+  document.getElementById("kittens").className += "kitten tolerant";
   saveKittens();
 }
 
@@ -164,6 +173,7 @@ function feed(id) {
     saveKittens();
   }
   setKittenMood(currentKitten);
+  saveKittens();
 }
 
 /**
@@ -171,22 +181,29 @@ function feed(id) {
  * @param {Kitten} kitten
  */
 function setKittenMood(kitten) {
-  switch (kitten.affection) {
+  let currentKitten = findKittenById(kitten);
+
+  switch (currentKitten.affection) {
     case 8:
       document.getElementById("kittens").className += "kitten happy";
+      currentKitten.mood = "happy";
       break;
     case 5:
       document.getElementById("kittens").className += "kitten tolerant";
+      currentKitten.mood = "tolerant";
       break;
     case 3:
       document.getElementById("kittens").className += "kitten angry";
+      currentKitten.mood = "angry";
       break;
     case 0:
       document.getElementById("kittens").className += "kitten gone";
+      currentKitten.mood = "gone";
       break;
     default:
       break;
   }
+  saveKittens();
 }
 
 /**
@@ -194,7 +211,7 @@ function setKittenMood(kitten) {
  * remember to save this change
  */
 function clearKittens(id) {
-  let kittenIndex = kittens.findIndex((kitten) => kitten.id == id);
+  let kittenIndex = kittens.findIndex((kitten) => (kitten.id = id));
 
   kittens.splice(kittenIndex, 1);
 

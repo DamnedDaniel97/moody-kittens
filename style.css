@@ -106,6 +106,7 @@ button {
   right: 15px;
   background-color: #ff0000;
   font-size: 20px;
+  pointer-events: all;
 }
 
 button:focus {
