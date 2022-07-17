@@ -3,6 +3,8 @@ let currentKitten = {};
 let mood = "";
 let affection = 5;
 
+loadKittens();
+saveKittens();
 /**
  * Called when submitting the new Kitten Form
  * This method will pull data from the form
@@ -22,7 +24,7 @@ function addKitten(event) {
     currentKitten = {
       id: generateId(),
       name: kittenName,
-      mood: "tolerant",
+      mood: "Tolerant",
       affection: 5,
     };
     kittens.push(currentKitten);
@@ -65,13 +67,13 @@ function drawKittens() {
     kittensTemplate += `
     <div class="p-2">
     <div id="kittens" class=" kittyBox d-flex space-around align-items-center flex-wrap">
-    <span class="boots">
+    <span id= "meow" class="boots">
       <img src="/pngaaa.com-589681.png" alt="kitty" height 100px width="200x">
     </span>
     <div class="interact d-flex space-between align-items-center flex-wrap">
-      <button id="pet" class="m-2">pet</button>
-      <button id="catnip">catnip</button>
-      <button class="m-2">feed</button>
+      <button id="pet" class="m-2" onclick = "pet('${kitten.id}')">pet</button>
+      <button id="catnip" onclick = "catnip('${kitten.id}')">catnip</button>
+      <button class="m-2" onclick = "feed('${kitten.id}')">feed</button>
     </div>
     <div class="change1">
       <p>Name:
@@ -80,9 +82,14 @@ function drawKittens() {
       <p>Mood:
         <span>${kitten.mood}</span>
       </p>
-      <p>Affection
+      <p>Affection:
         <span>${kitten.affection}</span>
       </p>
+    </div>
+    <div class = "container">
+    <button id = "delete" class = "deleteButton" type = "button" onclick = "clearKittens('${kitten.id}')">
+    <i class="fa-solid fa-eraser"></i>
+    </button>
     </div>
   </div>
   `;
@@ -96,7 +103,7 @@ function drawKittens() {
  * @return {Kitten}
  */
 function findKittenById(id) {
-  let find = kittens.find((kitten) => kitten.id == id);
+  return kittens.find((kitten) => kitten.id == id);
 }
 
 /**
@@ -107,7 +114,23 @@ function findKittenById(id) {
  * otherwise decrease the affection
  * @param {string} id
  */
-function pet(id) {}
+function pet(id) {
+  let currentKitten = findKittenById(id);
+  let randomNum = Math.random();
+  // console.log(randomNum);
+  if (currentKitten.affection >= 10) {
+    return;
+  }
+
+  if (randomNum > 0.5) {
+    currentKitten.affection++;
+    saveKittens();
+  } else {
+    currentKitten.affection--;
+    saveKittens();
+  }
+  setKittenMood(currentKitten);
+}
 
 /**
  * Find the kitten in the array of kittens
@@ -115,19 +138,68 @@ function pet(id) {}
  * Set the kitten's affection to 5
  * @param {string} id
  */
-function catnip(id) {}
+function catnip(id) {
+  let currentKitten = findKittenById(id);
+  currentKitten.mood = "Tolerant";
+  currentKitten.affection = 5;
+  setKittenMood(currentKitten);
+  saveKittens();
+}
+
+// NOTE button for feed
+
+function feed(id) {
+  let currentKitten = findKittenById(id);
+  let randomNum = Math.random();
+  // console.log(randomNum);
+  if (currentKitten.affection >= 10) {
+    return;
+  }
+
+  if (randomNum > 0.5) {
+    currentKitten.affection++;
+    saveKittens();
+  } else {
+    currentKitten.affection++;
+    saveKittens();
+  }
+  setKittenMood(currentKitten);
+}
 
 /**
  * Sets the kittens mood based on its affection
  * @param {Kitten} kitten
  */
-function setKittenMood(kitten) {}
+function setKittenMood(kitten) {
+  switch (kitten.affection) {
+    case 8:
+      document.getElementById("kittens").className += "kitten happy";
+      break;
+    case 5:
+      document.getElementById("kittens").className += "kitten tolerant";
+      break;
+    case 3:
+      document.getElementById("kittens").className += "kitten angry";
+      break;
+    case 0:
+      document.getElementById("kittens").className += "kitten gone";
+      break;
+    default:
+      break;
+  }
+}
 
 /**
  * Removes all of the kittens from the array
  * remember to save this change
  */
-function clearKittens() {}
+function clearKittens(id) {
+  let kittenIndex = kittens.findIndex((kitten) => kitten.id == id);
+
+  kittens.splice(kittenIndex, 1);
+
+  saveKittens();
+}
 
 /**
  * Removes the welcome content and should probably draw the

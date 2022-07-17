@@ -73,8 +73,7 @@ input:focus {
 .interact {
   position: absolute;
   top: 300px;
-  left: 35px;
-  border: 2px solid var(--primary);
+  left: 45px;
   padding-right: 10px;
 }
 
@@ -98,7 +97,17 @@ button {
   transition: all 0.2s ease;
   cursor: pointer;
   padding: 0.5em;
+  border-radius: 20%;
 }
+
+.deleteButton {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: #ff0000;
+  font-size: 20px;
+}
+
 button:focus {
   outline: none;
 }
