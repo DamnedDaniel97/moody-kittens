@@ -23,6 +23,8 @@ body {
   padding: 0;
   height: 100%;
   font-family: "Catamaran", sans-serif;
+  background-image: url(/img/stray.webp);
+  background-size: cover;
 }
 
 header {
@@ -155,7 +157,7 @@ button.btn-special:hover {
   filter: drop-shadow(var(--shadow));
 }
 .boots {
-  border: 5px solid var(--light);
+  border: 5px solid #b213b3;
   background-color: var(--dark-lighten);
   border-radius: 50%;
   position: absolute;
@@ -165,8 +167,8 @@ button.btn-special:hover {
 }
 
 .kittyBox {
-  background-color: var(--dark);
-  border: 5px solid var(--primary);
+  background-color: var(--dark-lighten);
+  border: 5px solid #b213b3;
   box-shadow: 0 0 20px var(--dark);
   height: 600px;
   width: 300px;

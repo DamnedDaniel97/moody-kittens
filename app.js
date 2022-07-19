@@ -5,6 +5,7 @@ let affection = 5;
 
 loadKittens();
 drawKittens();
+setKittenMood(currentKitten);
 
 /**
  * Called when submitting the new Kitten Form
@@ -18,6 +19,7 @@ function addKitten(event) {
   event.preventDefault();
   let form = event.target;
   let kittenName = form.name.value;
+  getStarted();
 
   currentKitten = kittens.find((kitten) => kitten.name == kittenName);
   if (!currentKitten) {
@@ -74,7 +76,7 @@ function drawKittens() {
     <div class="p-2">
     <div id="kittens" class=" kittyBox d-flex space-around align-items-center flex-wrap">
     <span id= "meow" class="boots">
-      <img src="/pngaaa.com-589681.png" alt="kitty" height 100px width="200x">
+      <img src="/img/pngaaa.com-589681.png" alt="kitty" height 100px width="200x">
     </span>
     <div class="interact d-flex space-between align-items-center flex-wrap">
       <button id="pet" class="m-2" onclick = "pet('${kitten.id}')">pet</button>
@@ -223,8 +225,9 @@ function clearKittens(id) {
  * list of kittens to the page. Good Luck
  */
 function getStarted() {
-  document.getElementById("welcome").remove();
+  document.getElementById("welcome").classList.add("hidden");
   console.log("Good Luck, Take it away");
+  document.getElementById("nameInput").classList.remove("hidden");
 }
 
 // --------------------------------------------- No Changes below this line are needed
