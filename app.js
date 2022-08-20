@@ -74,7 +74,7 @@ function drawKittens() {
     <div class="p-2 d-flex flex-wrap">
     <div id="kittens" class=" kittyBox d-flex justify-content-center align-items-center flex-wrap kitten ${kitten.mood}">
     <span id= "meow" class="boots">
-      <img src="img/pngaaa.com-589681.png" alt="kitty" height 100px width="200x">
+      <img src="./img/pngaaa.com-589681.png" alt="kitty" height 100px width="200x">
     </span>
     <div class="interact d-flex m-5">
       <button id="pet" class="m-2 btn-7 action d-flex" onclick = "pet('${kitten.id}')">
